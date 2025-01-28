@@ -1,0 +1,23 @@
+package pages;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import utils.WaitUtils;
+public class HomePage {
+	private WebDriver driver;
+
+    // Locators
+    private By searchBox = By.id("yfin-usr-qry");
+    private By firstAutoSuggestOption = By.cssSelector("ul[role='listbox'] li:first-child");
+
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void searchForStock(String stockSymbol) {
+        WaitUtils.waitForElement(driver, searchBox, 10).sendKeys(stockSymbol);
+    }
+
+    public void clickFirstAutoSuggestOption() {
+        WaitUtils.waitForElement(driver, firstAutoSuggestOption, 10).click();
+    }
+}

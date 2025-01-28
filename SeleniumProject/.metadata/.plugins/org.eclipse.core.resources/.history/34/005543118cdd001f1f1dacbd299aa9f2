@@ -1,0 +1,25 @@
+# Selenium Tests for Yahoo Finance
+
+This project contains automated Selenium WebDriver tests for validating Yahoo Finance functionalities. The tests are written in Java using the TestNG framework and are configured to be run via Maven.
+
+## What I Did
+1. **Developed Page Object Model (POM):** 
+   - Created reusable and maintainable page classes for Yahoo Finance, including `HomePage` and `StockDetailsPage`.
+2. **Implemented Test Cases:** 
+   - Designed tests to search for stock symbols, validate auto-suggest options, and verify stock details.
+3. **Setup Maven and Dependencies:** 
+   - Configured the `pom.xml` file with necessary dependencies like Selenium, TestNG, and WebDriver Manager.
+4. **Integrated Waits:**
+   - Used custom utility classes for explicit waits.
+5. **Configured Test Execution and Reports:**
+   - Enabled Maven to execute tests and generate reports.
+
+---
+
+
+## How to Run the Tests
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/selenium-yahoo-finance.git
+   cd selenium-yahoo-finance

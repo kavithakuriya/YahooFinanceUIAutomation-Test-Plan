@@ -1,0 +1,40 @@
+package page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+public class StockDetailsPage {
+    WebDriver driver;
+
+    // Locators
+    //private By stockPrice = By.xpath("//fin-streamer[@data-field='regularMarketPrice']");
+    private By previousClose = By.xpath("//td[@data-test='PREV_CLOSE-value']");
+    private By volume = By.xpath("//td[@data-test='TD_VOLUME-value']");
+
+    // Constructor
+    public StockDetailsPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    // Get stock price as a double
+//    public double getStockPrice() {
+//        String priceText = driver.findElement(stockPrice).getText().replace(",", "");
+//        return Double.parseDouble(priceText);
+//    }
+
+    // Get Previous Close value
+    public String getPreviousClose() {
+        return driver.findElement(previousClose).getText();
+    }
+
+    // Get Volume value
+    public String getVolume() {
+        return driver.findElement(volume).getText();
+    }
+    public double getStockPrice() {
+        WebElement stockPriceElement = driver.findElement(By.cssSelector("your-selector"));
+        if (stockPriceElement == null || stockPriceElement.getText().trim().isEmpty()) {
+            throw new IllegalStateException("Stock price element is missing or empty.");
+        }
+        String stockPriceText = stockPriceElement.getText().trim();
+        return Double.parseDouble(stockPriceText.replace(",", ""));
+    }
+}

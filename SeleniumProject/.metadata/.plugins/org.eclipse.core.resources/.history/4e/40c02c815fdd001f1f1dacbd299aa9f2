@@ -1,0 +1,28 @@
+package page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+public class HomePage {
+    WebDriver driver;
+    private By searchBox = By.id("yfin-usr-qry");
+    private By autoSuggestFirstEntry = By.xpath("//div[contains(@class, 'react-autosuggest__suggestions-list')]//li[1]");
+
+    // Constructor
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    // Enter stock symbol in the search box
+    public void searchStock(String stockSymbol) {
+        driver.findElement(searchBox).sendKeys(stockSymbol);
+    }
+
+    // Click on the first autosuggest entry
+    public void clickFirstAutoSuggestEntry() {
+        driver.findElement(autoSuggestFirstEntry).click();
+    }
+
+    // Verify first autosuggest entry text
+    public String getFirstAutoSuggestText() {
+        return driver.findElement(autoSuggestFirstEntry).getText();
+    }
+}

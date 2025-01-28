@@ -1,0 +1,67 @@
+package page;
+import java.time.Duration;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+public class StockDetailsPage {
+    //WebDriver driver;
+
+    // Locators
+    /*
+    private By stockPrice = By.xpath("//fin-streamer[@data-field='regularMarketPrice']");
+    private By previousClose = By.xpath("//td[@data-test='PREV_CLOSE-value']");
+    private By volume = By.xpath("//td[@data-test='TD_VOLUME-value']");
+
+    // Constructor
+    public StockDetailsPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    // Get stock price as a double
+    public double getStockPrice() {
+        String priceText = driver.findElement(stockPrice).getText().replace(",", "");
+        return Double.parseDouble(priceText);
+    }
+
+    // Get Previous Close value
+    public String getPreviousClose() {
+        return driver.findElement(previousClose).getText();
+    }
+
+    // Get Volume value
+    public String getVolume() {
+        return driver.findElement(volume).getText();
+    }
+    **/
+	 private WebDriver driver;
+	    private WebDriverWait wait;
+	private By stockPrice = By.cssSelector("[data-field='regularMarketPrice']");
+    private By previousClose = By.xpath("//td[@data-test='PREV_CLOSE-value']");
+    private By volume = By.cssSelector("[data-test='TD_VOLUME-value']");
+
+    public StockDetailsPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    }
+
+    public void waitForPageLoad() {
+        wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+    }
+
+    public double getStockPrice() {
+        WebElement priceElement = wait.until(ExpectedConditions.visibilityOfElementLocated(stockPrice));
+        return Double.parseDouble(priceElement.getText().replace(",", ""));
+    }
+
+    public String getPreviousClose() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(previousClose)).getText();
+    }
+
+    public String getVolume() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(volume)).getText();
+    }
+}
+

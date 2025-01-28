@@ -1,0 +1,32 @@
+package page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+public class HomePage {
+    WebDriver driver;
+//    private By searchBox = By.id("ybar-sbq-x");
+    WebElement element = driver.findElement(By.id("ybar-sbq-x"));
+    System.out.println("Is element displayed? " + element.isDisplayed());
+    System.out.println("Is element enabled? " + element.isEnabled());
+  //  private By autoSuggestFirstEntry = By.xpath("//div[contains(@class, 'react-autosuggest__suggestions-list')]//li[1]");
+    private By autoSuggestFirstEntry = By.cssSelector(".C(#000).Fz(14px).Fw(500)");
+
+    // Constructor
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    // Enter stock symbol in the search box
+    public void searchStock(String stockSymbol) {
+        driver.findElement(searchBox).sendKeys(stockSymbol);
+    }
+
+    // Click on the first autosuggest entry
+    public void clickFirstAutoSuggestEntry() {
+        driver.findElement(autoSuggestFirstEntry).click();
+    }
+
+    // Verify first autosuggest entry text
+    public String getFirstAutoSuggestText() {
+        return driver.findElement(autoSuggestFirstEntry).getText();
+    }
+}

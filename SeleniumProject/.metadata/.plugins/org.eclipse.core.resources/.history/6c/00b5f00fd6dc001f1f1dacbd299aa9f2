@@ -1,0 +1,39 @@
+package test;
+
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import page.HomePage;
+import page.StockDetailsPage;
+import utils.BaseTest;
+
+public class YahooFinanceTest extends BaseTest{
+	 @BeforeMethod
+	 public void setUpTest() {
+		 setup();
+		 driver.get("https://finance.yahoo.com/");
+		 
+	 }
+	 @AfterMethod
+	    public void tearDownTest() {
+	        teardown();
+	    }
+	
+	
+@Test
+public void testTeslaStockDetails() {
+	 HomePage homePage = new HomePage(driver);
+     StockDetailsPage stockDetailsPage = new StockDetailsPage(driver);
+     homePage.searchStock("TSLA");
+     homePage.clickFirstSuggestion();
+     double stockPrice = stockDetailsPage.getStockPrice();
+     Assert.assertTrue(stockPrice > 200, "Stock price is not greater than $200");
+     String previousClose = stockDetailsPage.getPreviousClose();
+     String volume = stockDetailsPage.getVolume();
+     System.out.println("Stock Price: $" + stockPrice);
+     System.out.println("Previous Close: " + previousClose);
+     System.out.println("Volume: " + volume);
+}
+}

@@ -1,0 +1,35 @@
+package page;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class HomePage {
+	 private WebDriver driver;
+	    private WebDriverWait wait;
+
+	    private By searchInput = By.id("ybar-sbq");
+	    private By autoSuggestFirstEntry = By.xpath("//li[contains(@data-symbol, 'TSLA')]");
+
+	    public HomePage(WebDriver driver) {
+	        this.driver = driver;
+	        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	    }
+
+	    public void searchStock(String stockSymbol) {
+	    	WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ybar-sbq")));
+	        searchBox.sendKeys(stockSymbol);
+	        ;
+	    }
+
+	    public void clickFirstSuggestion() {
+//	        WebElement firstEntry = wait.until(ExpectedConditions.elementToBeClickable(autoSuggestFirstEntry));
+//	        firstEntry.click();
+	    	 WebElement firstSuggestion = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".auto-suggest .first-suggestion"))); // Update with correct selector
+	         firstSuggestion.click();
+	    }
+	}

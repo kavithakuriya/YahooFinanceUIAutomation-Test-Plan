@@ -1,0 +1,33 @@
+package page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class StockDetailsPage {
+	private WebDriver driver;
+    private WebDriverWait wait;
+
+    public StockDetailsPage(WebDriver driver) {
+        this.driver = driver;
+        }
+
+ // Get the stock price
+    public double getStockPrice() {
+        WebElement stockPriceElement = driver.findElement(By.cssSelector(".Trsdu(0.3s)"));  // Update with correct selector
+        String priceText = stockPriceElement.getText();
+        return Double.parseDouble(priceText.replace(",", "").replace("$", ""));
+    }
+
+    // Get the Previous Close value
+    public String getPreviousClose() {
+        WebElement prevCloseElement = driver.findElement(By.xpath("//td[contains(text(), 'Previous Close')]/following-sibling::td"));
+        return prevCloseElement.getText();
+    }
+
+    // Get the Volume value
+    public String getVolume() {
+        WebElement volumeElement = driver.findElement(By.xpath("//td[contains(text(), 'Volume')]/following-sibling::td"));
+        return volumeElement.getText();
+    }
+}

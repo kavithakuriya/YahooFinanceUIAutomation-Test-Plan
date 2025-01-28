@@ -1,0 +1,14 @@
+package page;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class HomePage {
+	private WebDriver driver;
+    private WebDriverWait wait;
+    private By searchBox = By.id("yfin-usr-qry");
+    private By autosuggest = By.xpath("//li[contains(@class,'react-autosuggest__suggestion')]");
+
+
+
+}

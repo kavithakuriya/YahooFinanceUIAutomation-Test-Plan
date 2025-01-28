@@ -1,0 +1,54 @@
+package tests;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.StockPage;
+import utils.WebDriverManager;
+
+public class YahooFinanceTest {
+    private WebDriver driver;
+    private HomePage homePage;
+    private StockPage stockPage;
+
+    @BeforeClass
+    public void setUp() {
+        driver = WebDriverManager.getDriver();
+        driver.get("https://finance.yahoo.com/");
+        homePage = new HomePage(driver);
+        stockPage = new StockPage(driver);
+    }
+
+    @Test(priority = 1)
+    public void searchForTesla() {
+        homePage.searchForStock("TSLA");
+    }
+
+    @Test(priority = 2)
+    public void verifyAutoSuggest() {
+        homePage.clickFirstAutoSuggestOption();
+    }
+
+    @Test(priority = 3)
+    public void verifyStockPrice() {
+        double stockPrice = stockPage.getStockPrice();
+        System.out.println("Tesla Stock Price: $" + stockPrice);
+        Assert.assertTrue(stockPrice > 200, "Stock price is not greater than $200");
+    }
+
+    @Test(priority = 4)
+    public void captureAdditionalData() {
+        String previousClose = stockPage.getPreviousClose();
+        String volume = stockPage.getVolume();
+        System.out.println("Previous Close: " + previousClose);
+        System.out.println("Volume: " + volume);
+    }
+
+    @AfterClass
+    public void tearDown() {
+        WebDriverManager.quitDriver();
+    }
+}

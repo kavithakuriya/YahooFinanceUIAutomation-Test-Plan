@@ -1,0 +1,74 @@
+package test;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import page.HomePage;
+import page.StockDetailsPage;
+
+
+
+public class YahooFinanceTest {
+WebDriver driver;
+HomePage homePage;
+StockDetailsPage stockDetailsPage;
+
+@BeforeClass
+public void setUp() {
+    // Set up ChromeDriver
+
+	 WebDriverManager.chromedriver().setup();
+     driver = new ChromeDriver();
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    driver.manage().window().maximize();
+
+    // Initialize page objects
+    homePage = new HomePage(driver);
+    stockDetailsPage = new StockDetailsPage(driver);
+}
+
+@Test
+public void testTeslaStockDetails() {
+    // Step 1: Navigate to Yahoo Finance homepage
+    driver.get("https://finance.yahoo.com");
+
+    // Step 2: Search for Tesla (TSLA)
+    homePage.searchStock("TSLA");
+
+    // Step 3: Verify the autosuggest entry
+    String firstSuggestion = homePage.getFirstAutoSuggestText();
+    Assert.assertTrue(firstSuggestion.contains("Tesla, Inc"), "Autosuggest does not contain Tesla, Inc");
+
+    // Step 4: Click on the first suggestion
+    homePage.clickFirstAutoSuggestEntry();
+
+    // Step 5: Verify that stock price is greater than $200
+    double stockPrice = stockDetailsPage.getStockPrice();
+    Assert.assertTrue(stockPrice > 200, "Stock price is not greater than $200");
+
+    // Step 6: Capture and log additional data
+    String previousClose = stockDetailsPage.getPreviousClose();
+    String volume = stockDetailsPage.getVolume();
+
+    System.out.println("Stock Price: " + stockPrice);
+    System.out.println("Previous Close: " + previousClose);
+    System.out.println("Volume: " + volume);
+    
+   
+}
+
+//@AfterClass
+//public void tearDown() {
+//    // Quit the driver
+//    if (driver != null) {
+//        driver.quit();
+//    }
+//}
+}
