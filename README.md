@@ -1,0 +1,1 @@
+# YahooFinanceUIAutomation-Test-Plan
